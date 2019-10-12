@@ -1,0 +1,41 @@
+{
+  "name": "websocket-tail",
+  "version": "0.0.1",
+  "description": "A simple websocket server that tails a file and sends the contents through a websocket connection",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "prettier": "prettier '**/*.{ts,json,md}' --ignore-path .gitignore --single-quote --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ExtraHash/Tailer.git"
+  },
+  "keywords": [
+    "tail",
+    "logfile",
+    "websockets"
+  ],
+  "author": "ExtraHash",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/ExtraHash/Tailer/issues"
+  },
+  "homepage": "https://github.com/ExtraHash/Tailer#readme",
+  "dependencies": {
+    "@types/express": "^4.17.1",
+    "@types/tail": "^1.2.2",
+    "@types/ws": "^6.0.3",
+    "@types/yargs": "^13.0.3",
+    "chalk": "^2.4.2",
+    "express": "^4.17.1",
+    "tail": "^2.0.3",
+    "typescript": "^3.6.4",
+    "ws": "^7.1.2",
+    "yargs": "^14.2.0"
+  },
+  "devDependencies": {
+    "prettier": "^1.18.2"
+  }
+}
