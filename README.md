@@ -6,6 +6,7 @@ A simple websocket server that tails a text file and emits the tail via websocke
 
 - nodejs v10.x
 - yarn package manager
+- typescript (npm i -g typescript)
 
 ## Installation
 
@@ -25,6 +26,12 @@ Install the javascript dependencies:
 
 ```shell
 yarn
+```
+
+Compile the typescript code:
+
+```shell
+tsc
 ```
 
 ## Usage
