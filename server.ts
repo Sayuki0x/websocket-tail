@@ -61,11 +61,6 @@ const { logEvents } = logTail;
 
 // on connection
 wss.on('connection', (ws: WebSocket) => {
-  const { log } = logTail;
-  log.forEach(line => {
-    ws.send(line);
-  });
-
   // send the logstream
   logEvents.on('newLine', line => {
     ws.send(line);
