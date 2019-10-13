@@ -61,6 +61,11 @@ const { logEvents } = logTail;
 
 // on connection
 wss.on('connection', (ws: WebSocket) => {
+  const { log } = logTail;
+  log.forEach(line => {
+    ws.send(line);
+  });
+
   // send the logstream
   logEvents.on('newLine', line => {
     ws.send(line);
@@ -69,5 +74,5 @@ wss.on('connection', (ws: WebSocket) => {
 
 //start our server
 server.listen(Number(port) || 8999, () => {
-  console.log(`Server started on port ${server.address().port}`);
+  console.log(`Server started on port ${port}`);
 });
