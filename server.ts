@@ -1,12 +1,18 @@
 // Copyright (C) 2019 ExtraHash
 //
 // Please see the included LICENSE file for more information.
+import http from 'http';
+import fs from 'fs';
 import express from 'express';
 import chalk from 'chalk';
-import http from 'http';
 import WebSocket from 'ws';
 import yargs from 'yargs';
 import LogTail from './LogTail';
+
+// set up the log persistance file
+if (!fs.existsSync('logHistory.json')) {
+  fs.writeFileSync('logHistory.json', '[]');
+}
 
 // setting up the express server
 const app = express();
@@ -65,10 +71,9 @@ wss.on('connection', (ws: WebSocket) => {
 
   // send the history first (last 100 lines)
   const { log } = logTail;
-
   log.forEach((line: string) => {
     ws.send(line);
-  })
+  });
 
   // send the logstream
   logEvents.on('newLine', line => {
@@ -78,5 +83,5 @@ wss.on('connection', (ws: WebSocket) => {
 
 //start our server
 server.listen(Number(port) || 8999, () => {
-  console.log(`Server started on port ${port}`);
+  console.log(`Server started on port ${port || '8999'}`);
 });

@@ -2,3 +2,4 @@
 node_modules
 **/*.log
 **/*.save
+logHistory.json
