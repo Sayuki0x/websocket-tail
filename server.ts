@@ -8,6 +8,7 @@ import chalk from 'chalk';
 import WebSocket from 'ws';
 import yargs from 'yargs';
 import LogTail from './LogTail';
+import nodeCleanup from 'node-cleanup';
 
 // set up the log persistance file
 if (!fs.existsSync('logHistory.json')) {
@@ -84,4 +85,10 @@ wss.on('connection', (ws: WebSocket) => {
 //start our server
 server.listen(Number(port) || 8999, () => {
   console.log(`Server started on port ${port || '8999'}`);
+});
+
+nodeCleanup(function(exitCode, signal) {
+  console.log('Saving log history to disk...');
+  logTail.stopTail();
+  console.log('Goodbye');
 });

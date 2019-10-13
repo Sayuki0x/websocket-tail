@@ -25,11 +25,13 @@
   "homepage": "https://github.com/ExtraHash/websocket-tail#readme",
   "dependencies": {
     "@types/express": "^4.17.1",
+    "@types/node-cleanup": "^2.1.1",
     "@types/tail": "^1.2.2",
     "@types/ws": "^6.0.3",
     "@types/yargs": "^13.0.3",
     "chalk": "^2.4.2",
     "express": "^4.17.1",
+    "node-cleanup": "^2.1.2",
     "tail": "^2.0.3",
     "typescript": "^3.6.4",
     "ws": "^7.1.2",

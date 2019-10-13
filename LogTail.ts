@@ -31,6 +31,7 @@ if (fs.existsSync('logHistory.json')) {
 
 export default class LogTail {
   private logLocation: string;
+  private tail: Tail;
   private tailOptions: TailOptions = {
     separator: /[\r]{0,1}\n/,
     fromBeginning: false,
@@ -39,8 +40,8 @@ export default class LogTail {
     useWatchFile: os.platform() === 'win32',
     logger: console
   };
+
   public log: string[] = logHistory;
-  private tail: Tail;
   public logEvents = new EventEmitter();
 
   constructor(logLocation: string) {
@@ -48,6 +49,9 @@ export default class LogTail {
     this.tail = new Tail(this.logLocation, this.tailOptions);
     this.tail.on('line', line => this.addToLog(line));
     this.tail.on('error', error => this.addToLog(error.toString()));
+
+    this.stopTail = this.stopTail.bind(this);
+    this.startTail = this.stopTail.bind(this);
   }
 
   public startTail() {
@@ -55,21 +59,16 @@ export default class LogTail {
   }
 
   public stopTail() {
+    fs.writeFileSync('logHistory.json', JSON.stringify(this.log, null, 4));
+    console.log('History written successfully.');
     this.tail.unwatch();
   }
 
   private addToLog(line: string) {
-    this.log.unshift(line);
+    this.log.push(line);
     if (this.log.length > 100) {
-      this.log.pop();
+      this.log.shift();
     }
-
-    fs.writeFile(
-      'logHistory.json',
-      JSON.stringify(this.log.reverse()),
-      () => null
-    );
-
     this.logEvents.emit('newLine', line);
   }
 }
