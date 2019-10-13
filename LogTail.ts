@@ -41,7 +41,7 @@ export default class LogTail {
     logger: console
   };
 
-  public log: string[] = logHistory;
+  public log: string[] = logHistory || [];
   public logEvents = new EventEmitter();
 
   constructor(logLocation: string) {
