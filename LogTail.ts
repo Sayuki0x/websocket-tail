@@ -18,13 +18,14 @@ export default class LogTail {
   private logLocation: string;
   private tailOptions: TailOptions = {
     separator: /[\r]{0,1}\n/,
-    fromBeginning: true,
+    fromBeginning: false,
     fsWatchOptions: {},
     follow: true,
     useWatchFile: os.platform() === 'win32',
     logger: console
   };
   private tail: Tail;
+  public log: string[];
   public logEvents: EventEmitter;
 
   constructor(logLocation: string) {
@@ -33,17 +34,23 @@ export default class LogTail {
     this.tail.on('line', line => this.addToLog(line));
     this.tail.on('error', error => this.addToLog(error.toString()));
     this.logEvents = new EventEmitter();
+    this.log = [];
   }
 
-  startTail() {
+  public startTail() {
     this.tail.watch();
   }
 
-  stopTail() {
+  public stopTail() {
     this.tail.unwatch();
   }
 
   private addToLog(line: string) {
+    this.log.push(line);
+    if (this.log.length > 100) {
+      this.log.pop();
+    }
+
     this.logEvents.emit('newLine', line);
   }
 }

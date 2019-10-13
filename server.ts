@@ -61,6 +61,15 @@ const { logEvents } = logTail;
 
 // on connection
 wss.on('connection', (ws: WebSocket) => {
+  console.log('New websocket connection.');
+
+  // send the history first (last 100 lines)
+  const { log } = logTail;
+
+  log.forEach((line: string) => {
+    ws.send(line);
+  })
+
   // send the logstream
   logEvents.on('newLine', line => {
     ws.send(line);
