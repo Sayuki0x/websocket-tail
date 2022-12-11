@@ -30,7 +30,7 @@
     "@types/ws": "^6.0.3",
     "@types/yargs": "^13.0.3",
     "chalk": "^2.4.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "node-cleanup": "^2.1.2",
     "tail": "^2.0.3",
     "typescript": "^3.6.4",
